@@ -1,15 +1,15 @@
-//
-//
 const {Client, Message} = require('discord.js');
+const sql = require('better-sqlite3');
 
 /**
  * Permet de recharger le fichier *.js d'une commande, sans redemarrer le bot
  * @param {Client}  client  - Le client du bot
  * @param {Message} message - Le message qui a été écrit dans un channel
  * @param {Array}   theArgs - Arguments inclus après la commande
+ * @param {sql}     db      - base de donnée
  */
 
-exports.run = (client, message, theArgs) => { //TheArgs en troisieme arg
+exports.run = (client, message, theArgs/*, db*/) => {
 
     if (!theArgs || theArgs.length < 1) return message.reply('Must provide a command name to reload.');
     const commandName = theArgs[0];

@@ -1,9 +1,18 @@
 //
 //
 
-const { GuildMember } = require('discord.js');
+const {Client, Message} = require('discord.js');
+const sql = require('better-sqlite3');
 
-exports.run = (client, message, TheArgs) => { //TheArgs en troisieme arg
+/**
+ * Permet d'envoyer et de ramener des gens au goulag
+ * @param {Client}	client	- Le Client du bot
+ * @param {Message}	message	- Le Message envoyé dans un channel
+ * @param {Array}	theArgs	- Les arguments, après la commande
+ * @param {sql}		db		- Base de donnée
+ */
+
+exports.run = (client, message, theArgs/*, db*/) => {
 	//Vérif des permissions
 	if (message.author.id !== client.config.ownerID) {
 		return message.channel.send('t\'as cru la vie c un biscuit \naller, au goulag pour la peine \n(non, jrigole, g la flm pour l\'instant');
@@ -18,7 +27,7 @@ exports.run = (client, message, TheArgs) => { //TheArgs en troisieme arg
 	//Si pas de mention, on vérifie si les arguments correspondent à un utilisateur
 	}
 	else {
-		GoulagGuildMember = message.guild.members.cache.find(User => User.displayName.toLowerCase().includes(TheArgs.join(' ').toLowerCase()));
+		GoulagGuildMember = message.guild.members.cache.find(User => User.displayName.toLowerCase().includes(theArgs.join(' ').toLowerCase()));
 		if (!GoulagGuildMember) return message.react('❌');
 	}
 

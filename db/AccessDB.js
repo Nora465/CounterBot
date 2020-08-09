@@ -16,10 +16,18 @@ const db = new SQLite('./db/DB.db');
  * @param 	{string} 		GuildIDToTest 	- L'ID de la guild à vérifier
  * @returns {GuildSettings}					- La config de cette guild
  */
-exports.GetGuildSettings = (GuildIDToTest) => {
+/* exports.GetGuildSettings = (GuildIDToTest) => {
 	return db.prepare('SELECT * FROM GuildsSettings WHERE GuildID = ?').get(GuildIDToTest);
-};
+}; */
 
-/*exports.writeDB = (whatToWrite) => {
+/**
+ * Modification d'un paramètre de Guild
+ * @param {string} setting
+ * @param {string} value
+ * @param {string} guildID
+ */
+/* exports.ModifyAGuildSettings = (setting, value, guildID) => {
+	const query = db.prepare('UPDATE GuildSettings SET ? = ? WHERE GuildID = ?');
 
-};*/
+	return query.run(setting, value, guildID);
+}; */

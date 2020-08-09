@@ -1,12 +1,15 @@
-//Liens Utiles :
+const {Client, Message} = require('discord.js');
+const sql = require('better-sqlite3');
 
 /**
  * Affiche l'uptime du bot (le temps qui s'est écoulé depuis que le bot a été lancé)
- * @param {Discord.client} client - le client du bot
- * @param {Discord.Message} message - Le message qui a déclenché la commande
-*/
-//----------------------------------------------------------------------------------------------------------------------
-exports.run = (client, message) => {
+ * @param {Client}	client	- Le Client du bot
+ * @param {Message}	message	- Le Message envoyé dans un channel
+ * @param {Array}	TheArgs	- Les arguments, après la commande
+ * @param {sql}		db		- Base de donnée
+ */
+
+exports.run = (client, message/*, theArgs, db*/) => {
 
 	console.log('Cmd "uptime" lancé dans ' + message.channel.name);
 

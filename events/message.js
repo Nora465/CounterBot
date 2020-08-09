@@ -1,12 +1,11 @@
 const {Client, Message} = require('discord.js');
-const AccessDB = require('../db/AccessDB.js');
+const db = require('better-sqlite3')('./db/DB.db');
 
 /** Evenement "message"
  * Se déclenche à chaque fois qu'un message est écrit
  * @param {Client} 	client 	- Le Client du bot
  * @param {Message} message - Le Message écrit sur Discord
 */
-
 module.exports = (client, message) => {
 
 	// Ignore les bots & les messages qui commencent pas par le prefix
@@ -26,12 +25,21 @@ module.exports = (client, message) => {
 		if (!cmd) return;
 
 		// run the command
-		cmd.run(client, message, TheArgs);
+		cmd.run(client, message, TheArgs, db);
 	}
 	//Si c'est un message lambda
 	else {
 		//Recupère la config pour la guild où a été écrit le message
-		const GuildSettings = AccessDB.GetGuildSettings(message.guild.id);
+		//TODO l'intellisense est baisé, à modifier !
+		/**
+		 * Contient les paramètres de la guild
+		 * @typedef {object} GuildSettings
+		 * @property {string} GuildID			- L'ID de la guild
+		 * @property {string} prefix			- Le prefix utilisé sur cette guild
+		 * @property {string} CountingChanID	- L'ID du channel utilisé pour la comptage
+		 * @property {string} LastMessageID		- L'ID du dernier message valide, et enregistré dans la db
+		*/
+		const GuildSettings = db.prepare('SELECT * FROM GuildsSettings WHERE GuildID = ?').get(message.guild.id);
 
 		//Vérifie si la guild (et sa config) existe dans la db
 		if (GuildSettings === undefined) return;
@@ -44,8 +52,6 @@ module.exports = (client, message) => {
 		// Partie vérification du message
 		//--- output : le message, vérifié
 
-		
 
 	}
-
   };
