@@ -10,7 +10,6 @@ const fs = require('fs');
 const Enmap = require('enmap');
 
 const client = new Discord.Client();
-//const BotConfig = require('./BotConfig.json');
 
 //on attache la config et les commandes au BotClient, pour qu'il soit tjs accessible
 client.config = require('./BotConfig.json');
