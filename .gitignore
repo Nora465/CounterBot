@@ -1,5 +1,17 @@
+#Pas besoin de commit les modules
 node_modules
+
+#pas besoin de commit le token secret
 BotConfig.json
+
+#pas besoin de commit les fichiers WAL de la db
+#(ils n'apparaissent que de temps en temps)
 DB.db-shm
 DB.db-wal
+
+#pas besoin de commiter les fichiers de debug
 dabdabdab/
+
+#?? estce qu'on a besoin de commit les fichiers de config de VSCode ?
+.vscode/
+.vs/
