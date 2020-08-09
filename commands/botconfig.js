@@ -6,32 +6,51 @@ cette commande pourra être lancé pour définir :
 - Qui peut executer des actions "ADMIN" ???????
 */
 
-const SQLite = require('better-sqlite3');
-const db = new SQLite('./db/DB.db');
+const {Client, Message} = require('discord.js');
+const sql = require('better-sqlite3');
 
-exports.run = (client, message, TheArgs) => {
-    //Si un argument est présent, l'user veut modifier un seul paramètre
-    message.reply('déso, commande pas encore terminé (fo que je finisse l\'architecture de la db');
+/**
+ * Permet la configuration d'une guild (Prefix (plus tard), Channel de comptage, et dernier message valide)
+ * @param {Client}	client	- Le Client du bot
+ * @param {Message}	message	- Le Message envoyé dans un channel
+ * @param {Array}	TheArgs	- Les arguments, après la commande
+ * @param {sql}		db		- Base de donnée
+ */
+
+exports.run = (client, message, theArgs, db) => {
+    //Si 2 arguments sont présents, l'user veut modifier un seul paramètre
+    if (theArgs.length !== 2 && theArgs.length !== 0) return message.channel.send('Cette commande accepte 0 (modifie tous les paramètres) ou 2 argument (modifie juste un paramètre)');
+
+    message.channel.send('déso, commande pas encore terminé (fo que je finisse l\'architecture de la db');
     //return;
 
-    //si table "GuildsParameters" n'existe pas, on la créé
+    //Création de la table "GuildsParameters", si elle n'existe pas
     db.prepare('CREATE TABLE IF NOT EXISTS GuildsSettings (GuildID TEXT PRIMARY KEY UNIQUE NOT NULL, prefix TEXT NOT NULL DEFAULT \'\', CountingChanID TEXT NOT NULL , LastMessageID TEXT NOT NULL );').run();
 
-    if (TheArgs) {
-        //demande de modification d'un seul
-        this.ModifySomeParameters(TheArgs);
+    if (theArgs.length) {
+        if (theArgs[0] !== 'prefix' && theArgs[0] !== 'channel') return message.channel.send('L\'argument doit être "prefix" ou "channel"');
+        //demande de modification d'un seul paramètre
+        this.ModifyOneParameters(theArgs);
     }
     else {
         this.ModifyEveryParameters();
     }
 
     //on créé la table "guild_NAMEGUILD"
+    //TODO Query à faire !
 };
 
-this.ModifySomeParameters = (ParameterToModify) => {
-    console.log(ParameterToModify);
+this.ModifyOneParameters = ([param, value]) => {
+
+    console.log(param + '   ' + value);
+    /* TODO A VERIFIER / CONTINUER
+    const query = db.prepare('UPDATE GuildSettings SET ? = ? WHERE GuildID = ?');
+
+    return query.run(setting, value, guildID);
+    */
+
 };
 
-/*this.ModifyEveryParameters = () => {
+this.ModifyEveryParameters = () => {
 
-};*/
+};

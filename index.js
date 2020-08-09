@@ -8,7 +8,6 @@ if (Number(process.version.slice(1).split('.')[0]) < 12) throw new Error('Node 1
 const Discord = require('discord.js');
 const fs = require('fs');
 const Enmap = require('enmap');
-//const AccessDB = require('./db/AccessDB.js')
 
 const client = new Discord.Client();
 //const BotConfig = require('./BotConfig.json');

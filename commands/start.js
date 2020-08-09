@@ -1,17 +1,27 @@
 //Liens Utiles :
 //https://jsonformatter.org/
 //https://regex101.com/
-//
-const {Collection, MessageEmbed} = require('discord.js');
-const fs = require('fs');
-/**
- * Identical to [Map.delete()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete).
- * Deletes an element from the collection.
- * @param {*} key - The key to delete from the collection
- * @returns {boolean} `true` if the element was removed, `false` if the element does not exist.
+/*
+									TODO-LIST
+										- Mettre les commentaires correctes (/** *\) sur toutes les fonctions, pour lisibilité
+
 */
-//----------------------------------------------------------------------------------------------------------------------
-exports.run = (client, message, TheArgs) => {
+
+//Collection is temporary (used for debug)
+const {Client, Message, Collection} = require('discord.js');
+const sql = require('better-sqlite3');
+
+const fs = require('fs');
+
+/**
+ * Permet la configuration d'une guild (Prefix (plus tard), Channel de comptage, et dernier message valide)
+ * @param {Client}	client	- Le Client du bot
+ * @param {Message}	message	- Le Message envoyé dans un channel
+ * @param {Array}	TheArgs	- Les arguments, après la commande
+ * @param {sql}		db		- Base de donnée
+ */
+
+exports.run = (client, message, TheArgs/*, db*/) => {
 
 	console.log('Cmd "start" lancé dans ' + message.channel.name);
 

@@ -6,7 +6,7 @@ Cette fonction devra donner les stats actuel de la guild :
 
 */
 /*
-exports.run = (client, message, TheArgs) => {
+exports.run = (client, message, TheArgs, db) => {
 
 };
 */

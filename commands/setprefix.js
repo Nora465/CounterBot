@@ -1,12 +1,17 @@
-/*
-cette commande pourra être lancé pour :
-- Définir le préfix GLOBAL (commun à tout les serveurs)
-*/
+const {Client, Message} = require('discord.js');
+const sql = require('better-sqlite3');
 
 const fs = require('fs');
 
-exports.run = (client, message, TheArgs) => {
+/**
+ * Permet la configuration du prefix global (plus tard, faire guild-related)
+ * @param {Client}	client	- Le Client du bot
+ * @param {Message}	message	- Le Message envoyé dans un channel
+ * @param {Array}	TheArgs	- Les arguments, après la commande
+ * @param {sql}		db		- Base de donnée
+ */
 
+exports.run = (client, message, TheArgs/*, db*/) => {
 	//Vérifications
 	if (message.author.id !== client.config.ownerID) 	return message.channel.send('ESPECE DE ! \n(seul l\'owner peut faire cela)');
 	if (TheArgs.length !== 1) 							return message.channel.send('Cette commande n\'a qu\'__UN SEUL__ argument, sans espace !');
