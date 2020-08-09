@@ -2,14 +2,14 @@
 //
 
 const {Client, Message} = require('discord.js');
-const sql = require('better-sqlite3');
+const {prototype} = require('better-sqlite3');
 
 /**
  * Permet d'envoyer et de ramener des gens au goulag
- * @param {Client}	client	- Le Client du bot
- * @param {Message}	message	- Le Message envoyé dans un channel
- * @param {Array}	theArgs	- Les arguments, après la commande
- * @param {sql}		db		- Base de donnée
+ * @param {Client}		client	- Le Client du bot
+ * @param {Message}		message	- Le Message envoyé dans un channel
+ * @param {Array}		theArgs	- Les arguments, après la commande
+ * @param {prototype}	db		- Base de donnée
  */
 
 exports.run = (client, message, theArgs/*, db*/) => {

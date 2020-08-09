@@ -3,8 +3,8 @@ const db = require('better-sqlite3')('./db/DB.db');
 
 /** Evenement "message"
  * Se déclenche à chaque fois qu'un message est écrit
- * @param {Client} 	client 	- Le Client du bot
- * @param {Message} message - Le Message écrit sur Discord
+ * @param {Client} 		client 	- Le Client du bot
+ * @param {Message} 	message - Le Message écrit sur Discord
 */
 module.exports = (client, message) => {
 

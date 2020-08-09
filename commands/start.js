@@ -9,28 +9,28 @@
 
 //Collection is temporary (used for debug)
 const {Client, Message, Collection} = require('discord.js');
-const sql = require('better-sqlite3');
+const {prototype} = require('better-sqlite3');
 
 const fs = require('fs');
 
 /**
  * Permet la configuration d'une guild (Prefix (plus tard), Channel de comptage, et dernier message valide)
- * @param {Client}	client	- Le Client du bot
- * @param {Message}	message	- Le Message envoyé dans un channel
- * @param {Array}	TheArgs	- Les arguments, après la commande
- * @param {sql}		db		- Base de donnée
+ * @param {Client}		client	- Le Client du bot
+ * @param {Message}		message	- Le Message envoyé dans un channel
+ * @param {Array}		theArgs	- Les arguments, après la commande
+ * @param {prototype}	db		- Base de donnée
  */
 
-exports.run = (client, message, TheArgs/*, db*/) => {
+exports.run = (client, message, theArgs/*, db*/) => {
 
 	console.log('Cmd "start" lancé dans ' + message.channel.name);
 
 	//Si le message a plus d'un argument, on annule
-	if (TheArgs.length !== 1) {
+	if (theArgs.length !== 1) {
 		message.channel.reply('la con de tes morts : c\'est un seul argument après la fonction !');
 		return 'error: Args>1';
 	}
-	const IDFirstMsg = TheArgs[0];
+	const IDFirstMsg = theArgs[0];
 
     console.log('cache avant fetch : ' + message.channel.messages.cache.size);
 
