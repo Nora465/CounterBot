@@ -1,0 +1,5 @@
+node_modules/
+BotConfig.json
+*.db-shm
+*.db-wal
+dabdabdab/
