@@ -1,4 +1,5 @@
 {
+  "ownerID":"yourdiscordid",
   "token": "yourdiscordtoken",
   "prefix": "!"
 }
