@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "[bot discord] Permet de monitorer la comptage de nombres dans un channel discord",
   "main": "index.js",
+  "private" : true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

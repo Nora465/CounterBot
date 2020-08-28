@@ -7,7 +7,7 @@
 
 const logger = module.exports = {};
 
-logger.info() = function(debug_msg) {
-  date = new date();
+logger.info = (debug_msg) => {
+  const date = new date();
   console.log(`${date.toLocaleDateString()} [${date.toLocaleTimeString()}] [INFO] [${debug_msg}]`);
 };

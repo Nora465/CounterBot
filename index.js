@@ -64,4 +64,16 @@ fs.readdir('./commands/', (err, files) => {
 		// Stocke le tout dans la map "commands"
 		client.commands.set(commandName, props);
 	});
+
+	/*TODO Au démarrage du bot, vérifier (sur toutes les guilds) que le bot est à jour concernant le dernier comptage
+	const query = db.prepare('SELECT LastMessageID, CountingChanID FROM GuildsSettings WHERE GuildID = ?') //on récupèrerait pas plutot toutes les guilds d'un coup ?
+	client.guilds.cache.each((guild) => {
+		const [lastMessageID, countingChanID] = query.get(guild.id);
+		const countingChan = guild.channels.cache.get(countingChanID);
+		if (countingChan === undefined) display error!
+
+		countingChan.
+
+	});
+	*/
 });

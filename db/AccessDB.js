@@ -1,8 +1,8 @@
 /*
 	Utiliser ce document pour accéder à la db (pour éviter d'avoir plusieurs require('better-sqlite3') et de charger la db plusieurs fois)
 */
-const SQLite = require('better-sqlite3');
-const db = new SQLite('./db/DB.db');
+//const SQLite = require('better-sqlite3');
+//const db = new SQLite('./db/DB.db');
 
 /**
  * Contient les paramètres de la guild
