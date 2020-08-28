@@ -1,11 +1,12 @@
-const {MessageEmbed} = require('discord.js');
+const {Message, MessageEmbed} = require('discord.js');
 /**
- *
- * @param {import('discord.js').Message} message
- * @param  {Lang} lang
- * @return {Promise<void>}
+ * Permet d'afficher les stats du bot
+ * @param {Client}		client	- Le Client du bot
+ * @param {Message}		message	- Le Message envoyé dans un channel
+ * @param {Array}		theArgs	- Les arguments, après la commande
+ * @param {prototype}	db		- Base de donnée
  */
-module.exports = async (message) => {
+exports.run = async (/*client,*/ message/*, theArgs, db*/) => {
     const j = Math.floor((process.uptime() % 31536000) / 86400);
     const h = Math.floor((process.uptime() % 86400) / 3600);
     const m = Math.floor((process.uptime() % 3600) / 60);
@@ -13,12 +14,12 @@ module.exports = async (message) => {
     const embedComposer = new MessageEmbed();
     
     embedComposer.setTitle('Bot Stats');
-    embedComposer.addField('nombre de serveur', message.client.guilds.cache.size, true);
-    embedComposer.addField('nombre d\'utilisateur', message.client.users.cache.size, true);
-    embedComposer.addField('ping', message.client.ws.ping + ' ms', true);
-    embedComposer.addField('ram utiliser', (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + 'MB', true);
-    embedComposer.addField('uptime', `${j}j ${h}h ${m}m ${s}s`, true);
-    embedComposer.setFooter('demarer le');
+    embedComposer.addField('Nombre de serveur(s) : ', message.client.guilds.cache.size, true);
+    embedComposer.addField('Nombre d\'utilisateur(s) : ', message.client.users.cache.size, true);
+    embedComposer.addField('Ping : ', message.client.ws.ping + ' ms', true);
+    embedComposer.addField('RAM utilisée : ', (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + 'MB', true);
+    embedComposer.addField('Uptime : ', `${j}j ${h}h ${m}m ${s}s`, true);
+    embedComposer.setFooter('Démarrer le ');
     embedComposer.setTimestamp(message.client.readyTimestamp);
     await message.channel.send(embedComposer);
 };
