@@ -18,3 +18,8 @@ db.prepare('CREATE TABLE IF NOT EXISTS GuildsSettings (GuildID TEXT PRIMARY KEY 
 On peut utiliser message.guild.me.client pour récupérer le client du bot (dans message.js), ça évite de passer en argument qqch d'inutile
 (message.guild.me.client === client) ==> TRUE
 TODO VOIR pour supprimer le "client.config = require('botconfig')" etc... (ça permettrait d'enlever le client des arguments)
+
+Pour modifier une série d'ancien commit
+git rebase -i -p [commitHash] (exemple : df6ed549)
+git commit --amend --author="Nora465 <14955673+Nora465@users.noreply.github.com>" --no-edit
+git rebase --continue

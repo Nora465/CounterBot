@@ -12,7 +12,7 @@ const {prototype} = require('better-sqlite3');
  * @param {prototype}	db		- Base de donnée
  */
 
-exports.run = (client, message, theArgs/*, db*/) => {
+exports.run = async (client, message, theArgs/*, db*/) => {
 	//Vérif des permissions
 	if (message.author.id !== client.config.ownerID) {
 		return message.channel.send('t\'as cru la vie c un biscuit \naller, au goulag pour la peine \n(non, jrigole, g la flm pour l\'instant');
@@ -27,7 +27,9 @@ exports.run = (client, message, theArgs/*, db*/) => {
 	//Si pas de mention, on vérifie si les arguments correspondent à un utilisateur
 	}
 	else {
-		GoulagGuildMember = message.guild.members.cache.find(User => User.displayName.toLowerCase().includes(theArgs.join(' ').toLowerCase()));
+		const username = theArgs.join(' ').toLowerCase();
+		//fetch the member that start by "username", and load the GuildMember()
+		GoulagGuildMember = (await message.guild.members.fetch({query: username})).entries().next().value[1];
 		if (!GoulagGuildMember) return message.react('❌');
 	}
 
@@ -38,13 +40,13 @@ exports.run = (client, message, theArgs/*, db*/) => {
 	//Remove the Role
 	if (HasGoulagRole) {
 		GoulagGuildMember.roles.remove(RoleID, 'punition annulée').catch(console.error);
-		message.channel.send(`${GoulagGuildMember.displayName} est revenu du goulag (Sad UwU) !`);
+		message.channel.send(`${GoulagGuildMember} est revenu du goulag (Sad UwU) !`);
 		console.log(`${GoulagGuildMember.displayName} est revenu du goulag !`);
 	}
 	//Give the Role
 	else {
 		GoulagGuildMember.roles.add(RoleID, 'pas gentil d\'etre méchant').catch(console.error);
-		message.channel.send(`${GoulagGuildMember.displayName} est parti au goulag (UwU) !`);
+		message.channel.send(`${GoulagGuildMember} est parti au goulag (UwU) !`);
 		console.log(`${GoulagGuildMember.displayName} est parti au goulag !`);
 	}
 };
