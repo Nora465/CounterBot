@@ -1,7 +1,7 @@
 #Pas besoin de commit les modules
 node_modules
 
-#pas besoin de commit le token secret
+#pas besoin de commit le token secret :)
 BotConfig.json
 
 #pas besoin de commit les fichiers WAL de la db
@@ -15,3 +15,6 @@ dabdabdab/
 #?? estce qu'on a besoin de commit les fichiers de config de VSCode ?
 .vscode/
 .vs/
+
+#pas besoin de commit le fichier de démarrage rapide
+START_BOT.bat 
