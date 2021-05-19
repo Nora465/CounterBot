@@ -2,7 +2,7 @@ const {Client, Message} = require('discord.js');
 const {prototype} = require('better-sqlite3');
 
 const fs = require('fs');
-//TODO après avoir gérer la fonctionnalité "un prefix par guild" (stocké dans la db), suppression de cette commande
+//NOTE après avoir gérer la fonctionnalité "un prefix par guild" (stocké dans la db), suppression de cette commande
 /**
  * Permet la configuration du prefix global (plus tard, faire guild-related)
  * @param {Client}		client	- Le Client du bot

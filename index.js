@@ -1,25 +1,26 @@
 //pour lancer le bot : "node index.js" dans un terminal
 
-//On vérifie que le version de Node est >= à 8.0.0
+//On vérifie que le version de Node est >= à 12.0.0
 //sinon, erreur
-if (Number(process.version.slice(1).split('.')[0]) < 12) throw new Error('Node 12.0.0 or higher is required. Update Node on your system.');
+if (Number(process.versions.node.split('.')[0]) < 12) throw new Error('Node 12.0.0 or higher is required. Update Node on your system.');
 
 
 const Discord = require('discord.js');
 const fs = require('fs');
+
 const Enmap = require('enmap');
 
 const client = new Discord.Client();
 
 //on attache la config et les commandes au BotClient, pour qu'il soit tjs accessible
-client.config = require('./BotConfig.json');
+client.config = require(__dirname + '/BotConfig.json');
 client.commands = new Enmap();
 
 //-------------- CONNECTION A DISCORD ------------------------------------------
 client.login(client.config.token);
 
 //Boucle qui lit le contenu du dossier /events/ et lie chaque fichier à son evenement
-fs.readdir('./events/', (err, files) => {
+fs.readdir(__dirname + '/events', (err, files) => {
 	if (err) return console.error(err);
 
 	//Boucle de lecture de tous les fichiers du dossier
@@ -28,7 +29,7 @@ fs.readdir('./events/', (err, files) => {
 		if (!file.endsWith('.js')) return;
 
 		// Charge le fichier event
-		const event = require(`./events/${file}`);
+		const event = require(`${__dirname}/events/${file}`);
 
 		// Recupère le nom de l'event via le nom du fichier
 		const eventName = file.split('.')[0];
@@ -40,12 +41,12 @@ fs.readdir('./events/', (err, files) => {
 		client.on(eventName, event.bind(null, client));
 
 		//Suppression du require('./events/fileEvent.js') (on supprime uniquement le reference, les fonctions restent)
-		delete require.cache[require.resolve(`./events/${file}`)];
+		delete require.cache[require.resolve(`${__dirname}/events/${file}`)];
 	});
 });
 
 //Boucle qui lit le contenu du dossier /commands/ et stocke chaque commande dans une Enmap
-fs.readdir('./commands/', (err, files) => {
+fs.readdir(__dirname + '/commands', (err, files) => {
 	if (err) return console.error(err);
 
 	////Boucle de lecture de tous les fichiers du dossier
@@ -54,7 +55,7 @@ fs.readdir('./commands/', (err, files) => {
 		if (!file.endsWith('.js')) return;
 
 		// Charge le fichier de commande
-		const props = require(`./commands/${file}`);
+		const props = require(`${__dirname}/commands/${file}`);
 
 		// Recupère le nom de la commande via le nom du fichier
 		const commandName = file.split('.')[0];

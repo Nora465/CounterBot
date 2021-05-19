@@ -74,7 +74,7 @@ this.ModifyOneParameters = (message, [param, value], db) => {
 		*/
 	}
 
-	// TODO A VERIFIER / CONTINUER
+	// FIXME A VERIFIER / CONTINUER
 	db.prepare('UPDATE GuildsSettings SET ' + param + ' = ? WHERE GuildID = ?').run(value, message.guild.id);
 	return ''; //pas d'erreur
 };
