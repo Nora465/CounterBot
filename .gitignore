@@ -18,3 +18,6 @@ dabdabdab/
 
 #pas besoin de commit le fichier de démarrage rapide
 START_BOT.bat 
+
+#On évite d'envoyer les fichiers de tests
+commands/test.js

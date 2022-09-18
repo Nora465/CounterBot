@@ -35,7 +35,7 @@ exports.run = (client, message, theArgs, db) => {
 	}
 
 	//Si erreur, on envoi le message sur discord
-	if (error !== '' && typeof error === String) return message.channel.send(error).catch(console.log);
+	if (error !== '' && typeof error === 'string') return message.channel.send(error).catch(console.log);
 
 	//on créé la table "guild_NAMEGUILD" si pas d'erreur
 	/*if (error === '') {
@@ -102,7 +102,7 @@ this.ModifyEveryParameters = async (client, message, db) => {
 		console.log('collected "' + m.content + '"');
 		const error = this.ModifyOneParameters(message, ['prefix', m.content], db);
 
-		if (error !== '' && typeof error === String) {
+		if (error !== '' && typeof error === 'string') {
 			message.channel.send(error).catch(console.log);
 			collector.resetTimer();
 		}

@@ -1,5 +1,7 @@
 const {Client, Message} = require('discord.js');
-const db = require('better-sqlite3')('./db/DB.db');
+const CountHelper = require('../utils/CountingCheck.js');
+const db = require('better-sqlite3')(__dirname + '/../db/DB.db');
+
 
 /** Evenement "message"
  * Se déclenche à chaque fois qu'un message est écrit
@@ -7,11 +9,19 @@ const db = require('better-sqlite3')('./db/DB.db');
  * @param {Message} 	message - Le Message écrit sur Discord
 */
 module.exports = (client, message) => {
-
 	// Ignore les bots & les messages qui commencent pas par le prefix
 	if (message.author.bot) return;
 
-	//Si c'est une commande
+	//Ignore si le message vient d'autre chose qu'un channel texte
+	if (message.channel.type != 'text') return message.channel.send('Je n\'accepte pas de message ici, uniquement sur un serveur').catch(console.error);
+
+	/*
+	if (message.author.id === 390178998442786816) {
+		message.react('816635706733494273').error(console.error);
+	} //Si c'est @chat, réagir avec l'emote Emilien
+	*/
+
+	// =====ANCHOR Message commence par le prefix ==========
 	if (message.content.startsWith(client.config.prefix)) {
 
 		//Définition standard de la commande et des arguments
@@ -27,31 +37,45 @@ module.exports = (client, message) => {
 		// run the command
 		cmd.run(client, message, TheArgs, db);
 	}
-	//Si c'est un message lambda
+	// =====ANCHOR Message lambda ==========
 	else {
-		//Recupère la config pour la guild où a été écrit le message
+		//Remplace automatiquement les embeds vidéos de media.discordapp.net par cdn.discordapp.com
+		//Les embeds media ne marchent pas
+		if (/https:\/\/media.discordapp.net\/attachments\/[0-9]{18}\/[0-9]{18}\/.*\.(mp4|mpeg|mov|flv|mov)/gm.test(message.content)) {
+			const bestLink = message.content.replaceAll('media.discordapp.net', 'cdn.discordapp.com');
+			message.reply('tiens batard, voici un lien fonctionnel : \n' + bestLink);
+			if (message.deletable) message.delete().catch(console.error);
+		}
+
 		//TODO l'intellisense est baisé, à modifier !
 		/**
-		 * Contient les paramètres de la guild
-		 * @typedef {object} GuildSettings
+		 * Contient les paramètres de la guild où a été écrit le message
+		 * @typedef {object} guildSettings
 		 * @property {string} GuildID			- L'ID de la guild
 		 * @property {string} prefix			- Le prefix utilisé sur cette guild
 		 * @property {string} CountingChanID	- L'ID du channel utilisé pour la comptage
 		 * @property {string} LastMessageID		- L'ID du dernier message valide, et enregistré dans la db
 		*/
-		const GuildSettings = db.prepare('SELECT * FROM GuildsSettings WHERE GuildID = ?').get(message.guild.id);
+		const guildSettings = db.prepare('SELECT * FROM GuildsSettings WHERE GuildID = ?').get(message.guild.id);
 
-		//Vérifie si la guild (et sa config) existe dans la db
-		if (GuildSettings === undefined) return;
-		//Vérifie si le channel utilisé est un channel de comptage
-		if (message.channel.id !== GuildSettings.CountingChanID) return;
+		//La guild doit exister dans la db
+		if (guildSettings === undefined) return;
+		//Le channel du message doit être le channel de comptage
+		if (message.channel.id !== guildSettings.countingChanID) return;
 
+		//Check : le dernier message du channel n'est pas le même que celui dans la db ?
+		//puis vérifier s'il est bon
+		//FIXME supprimer cette partie ! (déjà faite sur index.js)
+		message.channel.messages.fetch({limit: 1, before: guildSettings.lastMessageID})
+			.then(messages => {
+				console.log(messages.first());
+			});
 		console.log('le message est dans le bon channel, pret à vérifier le contenu');
 
 		//--- input : le message a vérifier
 		// Partie vérification du message
 		//--- output : le message, vérifié
-
+		CountHelper.CheckTheMessage(message, db);
 
 	}
-  };
+};
