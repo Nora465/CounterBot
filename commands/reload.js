@@ -11,13 +11,13 @@ const {prototype} = require('better-sqlite3');
 
 exports.run = (client, message, theArgs/*, db*/) => {
 
-	if (!theArgs || theArgs.length < 1) return message.reply('Must provide a command name to reload.');
+	if (!theArgs || theArgs.length < 1) return message.reply('Must provide a command name to reload.').catch(console.error);
 	const commandName = theArgs[0];
 
 	// Check if the command exists and is valid
 	if (!client.commands.has(commandName)) {
 		//message.react('⁉️');
-		message.react('❌');
+		message.react('❌').catch(console.error);
 		console.log(`CMD_RELOAD_ERR : "${commandName}" does not exist`);
 		return;
 	}
@@ -31,5 +31,5 @@ exports.run = (client, message, theArgs/*, db*/) => {
 	client.commands.set(commandName, props);
 
 	console.log(`CMD_RELOAD_OK : "${commandName}"`);
-	message.react('✅');
+	message.react('✅').catch(console.error);
 };

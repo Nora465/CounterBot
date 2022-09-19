@@ -20,26 +20,27 @@ const fs = require('fs');
  * @param {Array}		theArgs	- Les arguments, après la commande
  * @param {prototype}	db		- Base de donnée
  */
-
 exports.run = (client, message, theArgs/*, db*/) => {
 
 	console.log('Cmd "start" lancé dans ' + message.channel.name);
 
 	//Si le message a plus d'un argument, on annule
 	if (theArgs.length !== 1) {
-		message.channel.reply('la con de tes morts : c\'est un seul argument après la fonction !');
+		message.reply('la con de tes morts : c\'est un seul argument après la fonction (le premier msg du channel) !').catch(console.error);
 		return 'error: Args>1';
 	}
-	const IDFirstMsg = theArgs[0];
+	const IDFirstMsg = theArgs[0].toString();
 
-    console.log('cache avant fetch : ' + message.channel.messages.cache.size);
-
+    console.log(`cache avant fetch : ${message.channel.messages.cache.size.toString()}`);
+	return message.reply('la version V13 de discordjs a cassé cette commande, TODO :(');
+	/*
 	//Récupération de tout les messages du channel (où le cmd a été écrite)
 	message.channel.messages.fetch({limit: 99, after: IDFirstMsg}) //{limit: 39, after: IDFirstMsg}
 	.then(async messages => {
 
 		//Set : On met le premier message à la fin de la collection (de la forme {snowflake, message})
 		const FirstMessage = await message.channel.messages.fetch(IDFirstMsg);
+		//FIXME la ligne au dessus est cassé avec la version V13 de discordjs (on doit setup un cache max (defaut=200) pour les messages, donc on peut pas remonter jusqu'en haut :()
         messages.set(IDFirstMsg, FirstMessage);
 
 		//Mise en forme des messages (Filtrage & Arrangement)
@@ -53,15 +54,15 @@ exports.run = (client, message, theArgs/*, db*/) => {
 		//boucle pour écrire tout les messages
 		/*messages.each(msg => {
 			console.debug(msg.createdAt + ' ===> ' + msg.content);
-		});*/
+		});*//*
 
 		//supprime le message de l'auteur (+ vérifie s'il peut le delete)
 		if (message.deletable) message.delete();
 		else console.log('Je n\'arrive pas à supprimer le message, vérifier les perms');
 
-		console.debug('cache après fetch : ' + message.channel.messages.cache.size);
+		console.debug(`cache après fetch : ${message.channel.messages.cache.size.toString()}`);
 	})
-	.catch(console.error);
+	.catch(console.error);*/
 
 
 	//TODO : Si c'est Fabou qui écrit un nombre, mettre la réaction :FabouLove: :)
@@ -124,7 +125,7 @@ this.MiseEnFormeMessages = function(client, messages) {
 
 			const InfoForLog = 'NON FULL-CHIFFRE (isolation) : ' + m.content;
 			m.content = m.content.match(/[0-9]+/g)[0]; //va isoler la première suite de chiffres présente dans la chaine
-			console.log(InfoForLog + ' ==> ' + m.content);
+			console.log(`${InfoForLog} ==> ${m.content}`);
 		}
 
 		//Convertion Binaire -> Décimal

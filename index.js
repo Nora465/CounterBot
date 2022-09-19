@@ -10,7 +10,12 @@ const fs = require('fs');
 
 const Enmap = require('enmap');
 
-const client = new Discord.Client();
+const client = new Discord.Client({intents: [
+	Discord.Intents.FLAGS.GUILD_MEMBERS, //autorise la mise à jour du cache des guildMembers
+	Discord.Intents.FLAGS.GUILDS, //autorise la mise à jour du cache de guilds, channels et guild.roles
+	Discord.Intents.FLAGS.MESSAGE_CONTENT,
+	Discord.Intents.FLAGS.GUILD_MESSAGES,
+]});
 
 //on attache la config et les commandes au BotClient, pour qu'il soit tjs accessible
 client.config = require(__dirname + '/BotConfig.json');
@@ -40,7 +45,7 @@ fs.readdir(__dirname + '/events', (err, files) => {
 		// This line is awesome by the way. Just sayin'.
 		client.on(eventName, event.bind(null, client));
 
-		//Suppression du require('./events/fileEvent.js') (on supprime uniquement le reference, les fonctions restent)
+		//Suppression du require('./events/fileEvent.js') (on supprime uniquement la reference, les fonctions restent)
 		delete require.cache[require.resolve(`${__dirname}/events/${file}`)];
 	});
 });

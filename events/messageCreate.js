@@ -13,7 +13,7 @@ module.exports = (client, message) => {
 	if (message.author.bot) return;
 
 	//Ignore si le message vient d'autre chose qu'un channel texte
-	if (message.channel.type != 'text') return message.channel.send('Je n\'accepte pas de message ici, uniquement sur un serveur').catch(console.error);
+	if (message.channel.type != 'GUILD_TEXT') return message.channel.send('Je n\'accepte pas de message ici, uniquement sur un serveur').catch(console.error);
 
 	/*
 	if (message.author.id === 390178998442786816) {
@@ -41,10 +41,13 @@ module.exports = (client, message) => {
 	else {
 		//Remplace automatiquement les embeds vidéos de media.discordapp.net par cdn.discordapp.com
 		//Les embeds media ne marchent pas
-		if (/https:\/\/media.discordapp.net\/attachments\/[0-9]{18}\/[0-9]{18}\/.*\.(mp4|mpeg|mov|flv|mov)/gm.test(message.content)) {
-			const bestLink = message.content.replaceAll('media.discordapp.net', 'cdn.discordapp.com');
-			message.reply('tiens batard, voici un lien fonctionnel : \n' + bestLink);
-			if (message.deletable) message.delete().catch(console.error);
+		if (/https:\/\/media.discordapp.net\/attachments\/[0-9]{18,19}\/[0-9]{18,19}\/.*\.(mp4|mpeg|mov|flv|mov)/gm.test(message.content)) {
+			const betterLink = message.content.replaceAll('media.discordapp.net', 'cdn.discordapp.com');
+			message.reply(`tiens batard, voici un lien fonctionnel : \n ${betterLink}`)
+				.then(()=> {
+					if (message.deletable) message.delete().catch(console.error);
+				})
+				.catch(console.error);
 		}
 
 		//TODO l'intellisense est baisé, à modifier !

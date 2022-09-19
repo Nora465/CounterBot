@@ -14,11 +14,11 @@ const fs = require('fs');
 
 exports.run = (client, message, theArgs/*, db*/) => {
 	//Vérifications
-	if (message.author.id !== client.config.ownerID) 	return message.channel.send('ESPECE DE ! \n(seul l\'owner peut faire cela)');
-	if (theArgs.length !== 1) 							return message.channel.send('Cette commande n\'a qu\'__UN SEUL__ argument, sans espace !');
-	if (theArgs[0].length !== 1) 						return message.channel.send('le prefix doit faire __UN SEUL__ caractère !');
-	if (theArgs[0] === client.config.prefix) 			return message.channel.send('Le nouveau prefix doit __etre différent__ de l\'ancien !');
-	if (theArgs[0].search(/[^a-z0-9]/))					return message.channel.send('Le prefix doit être un caractère spéciale');
+	if (message.author.id !== client.config.ownerID) 	return message.channel.send('ESPECE DE ! \n(seul l\'owner peut faire cela)').catch(console.error);
+	if (theArgs.length !== 1) 							return message.channel.send('Cette commande n\'a qu\'__UN SEUL__ argument, sans espace !').catch(console.error);
+	if (theArgs[0].length !== 1) 						return message.channel.send('le prefix doit faire __UN SEUL__ caractère !').catch(console.error);
+	if (theArgs[0] === client.config.prefix) 			return message.channel.send('Le nouveau prefix doit __etre différent__ de l\'ancien !').catch(console.error);
+	if (theArgs[0].search(/[^a-z0-9]/))					return message.channel.send('Le prefix doit être un caractère spéciale').catch(console.error);
 
 	//Chargement du nouveau préfix
 	client.config.prefix = theArgs[0];
@@ -29,7 +29,7 @@ exports.run = (client, message, theArgs/*, db*/) => {
 	fs.writeFile('./BotConfig.json', newConfig, (err) => {
 		if(err) return console.log(err);
 
-		message.channel.send(`✅ Prefix modifié avec succès ! \nNouveau prefix => ${theArgs[0]}`);
+		message.channel.send(`✅ Prefix modifié avec succès ! \nNouveau prefix => ${client.config.prefix}`);
 		client.user.setActivity(`Le Goulag (prefix => ${client.config.prefix})`, { type: 'WATCHING'});
 	});
 };

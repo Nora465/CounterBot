@@ -17,7 +17,7 @@ const {prototype} = require('better-sqlite3');
  * @param {prototype}	db		- Base de donnée
  */
 
-exports.run = (client, message, theArgs, db) => {
+exports.run = async (client, message, theArgs, db) => {
 	//Si 2 arguments sont présents, l'user veut modifier un seul paramètre
 	if (theArgs.length !== 2 && theArgs.length !== 0) return message.channel.send('Cette commande accepte 0 (modifie tous les paramètres) ou 2 argument (modifie juste un paramètre)').catch(console.log);
 
@@ -31,7 +31,7 @@ exports.run = (client, message, theArgs, db) => {
 		error = this.ModifyOneParameters(message, theArgs, db);
 	}
 	else {
-		error = this.ModifyEveryParameters(client, message, theArgs, db);
+		error = await this.ModifyEveryParameters(client, message, theArgs, db);
 	}
 
 	//Si erreur, on envoi le message sur discord
@@ -57,7 +57,7 @@ this.ModifyOneParameters = (message, [param, value], db) => {
 
 	//Vérifs : Si le param à changer = channel
 	if (param === 'channel') {
-		if (message.guild.channels.cache.get(value) === undefined) return 'Le 2eme argument doit être un __snowflake__ et l\'ID d\'un channel de cette guild !';
+		if (message.guild.channels.cache.get(value.toString()) === undefined) return 'Le 2eme argument doit être un __snowflake__ et l\'ID d\'un channel de cette guild !';
 		param = 'CountingChanID'; //remplacement de 'channel' par CountingChanID pour la db
 	}
 	//Vérifs : Si le param à changer = prefix
@@ -92,15 +92,17 @@ this.ModifyEveryParameters = async (client, message, db) => {
 	.setColor(0x00AE86)
 	.setThumbnail(client.user.avatarURL({format : 'png'}));
 
-	await message.channel.send(embed).catch(console.log);//.then(() => {
+	await message.channel.send({embeds: [embed]}).catch(console.log);//.then(() => {
 
 	//Création d'un collecteur (pour collecter les message écrit après l'affichage du embed)
 	const collectorFilter = (m) => m.author === message.author;
-	const collector = message.channel.createMessageCollector(collectorFilter, {time: 10000});
+	const collector = message.channel.createMessageCollector({collectorFilter, time: 10000});
 
 	collector.on('collect', m => {
+		if (m.author.bot) return;
 		console.log('collected "' + m.content + '"');
-		const error = this.ModifyOneParameters(message, ['prefix', m.content], db);
+		//TODO virer la modif du prefix et mettre en place les slashs cmd
+		const error = '';//this.ModifyOneParameters(message, ['prefix', m.content], db);
 
 		if (error !== '' && typeof error === 'string') {
 			message.channel.send(error).catch(console.log);
@@ -108,7 +110,7 @@ this.ModifyEveryParameters = async (client, message, db) => {
 		}
 		else {
 			embed.setDescription('Veuillez entrer l\'ID du channel de comptage');
-
+			//TODO finir ça
 		}
 	});
 
@@ -117,7 +119,7 @@ this.ModifyEveryParameters = async (client, message, db) => {
 	});
 	/*
 	const filter = m => m.content.includes('discord');
-	const collector = message.channel.createMessageCollector(filter, { time: 10000 });
+	const collector = message.channel.createMessageCollector({filter, time: 10000 });
 
 	collector.on('collect', m => {
 		console.log(`Collected ${m.content}`);

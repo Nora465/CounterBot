@@ -1,7 +1,7 @@
 //
 //
 
-const {Client, Message, GuildMember} = require('discord.js');
+const {Client, Message, GuildMember, Permissions} = require('discord.js');
 const {prototype} = require('better-sqlite3');
 
 /** ID du rôle pour le goulag */
@@ -24,7 +24,7 @@ exports.run = async (client, message, theArgs/*, db*/) => {
 
 	//1 Vérification : Le bot a les droits pour mettre/enlever des rôles
 	const thisGuild = client.guilds.cache.get(message.guild.id);
-	if (!thisGuild.me.hasPermission('MANAGE_ROLES')) {
+	if (!thisGuild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
 		return message.channel.send('Je n\'ai pas les permissions nécessaires : "MANAGE_ROLES" \nAnnulation...').catch(console.error);
 	}
 
@@ -55,7 +55,7 @@ exports.run = async (client, message, theArgs/*, db*/) => {
 
 	//3 on empêche les auto-goulag
 	if (message.author.id === goulagGuildMember.id) {
-		return message.reply('Tu veux aller au goulag ? Complétement idiot ... Cette génération est perdue ').catch(console.error);
+		return message.reply('Tu veux aller au goulag ? Bah non \\:)').catch(console.error);
 	}
 
 	//4 La commande a été émise par l'owner (sinon on goulag la personne)
@@ -84,7 +84,7 @@ this.ToogleRoleOfUser = async (message, goulagGuildMember, autorizedOwner) => {
 		if (autorizedOwner) {
 			//Remove the role
 			goulagGuildMember.roles.remove(this.goulagRoleID, 'punition annulée').then(()=> {
-				message.channel.send(`${goulagGuildMember} est revenu du goulag (Sad UwU) !`).catch(console.error);
+				message.channel.send(`${goulagGuildMember.displayName} est revenu du goulag (Sad UwU) !`).catch(console.error);
 				console.log(`${goulagGuildMember.displayName} est revenu du goulag !`);
 			}).catch(console.error);
 		}
@@ -95,7 +95,7 @@ this.ToogleRoleOfUser = async (message, goulagGuildMember, autorizedOwner) => {
 	//Le guildMember n'a pas le rôle ET c'est l'owner qui a fait la commande
 	else if (autorizedOwner) {
 			goulagGuildMember.roles.add(this.goulagRoleID, 'pas gentil d\'etre méchant').then(() =>{
-				message.channel.send(`${goulagGuildMember} est parti au goulag (UwU) !`).catch(console.error);
+				message.channel.send(`${goulagGuildMember.displayName} est parti au goulag (UwU) !`).catch(console.error);
 				console.log(`${goulagGuildMember.displayName} => GOULAG (par ${message.member.displayName})`);
 			}).catch(console.error);
 	}

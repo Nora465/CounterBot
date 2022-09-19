@@ -10,5 +10,5 @@ const {prototype} = require('better-sqlite3');
  */
 
 exports.run = (client, message/*, theArgs, db*/) => {
-    message.channel.send(`Pong ! Latence : ${Math.round(client.ws.ping)}ms`);
+	message.channel.send(`Pong ! Latence : ${Math.round(client.ws.ping).toString()}ms`);
 };
