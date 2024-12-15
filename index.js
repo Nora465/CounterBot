@@ -15,6 +15,7 @@ const client = new Discord.Client({intents: [
 	Discord.Intents.FLAGS.GUILDS, //autorise la mise à jour du cache de guilds, channels et guild.roles
 	Discord.Intents.FLAGS.MESSAGE_CONTENT,
 	Discord.Intents.FLAGS.GUILD_MESSAGES,
+	Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
 ]});
 
 //on attache la config et les commandes au BotClient, pour qu'il soit tjs accessible
@@ -83,3 +84,5 @@ fs.readdir(__dirname + '/commands', (err, files) => {
 	});
 	*/
 });
+
+client.on('error', (error) => console.error(error));
