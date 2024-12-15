@@ -12,8 +12,8 @@ module.exports = (client, message) => {
 	// Ignore les bots & les messages qui commencent pas par le prefix
 	if (message.author.bot) return;
 
-	//Ignore si le message vient d'autre chose qu'un channel texte
-	if (message.channel.type != 'GUILD_TEXT') return message.channel.send('Je n\'accepte pas de message ici, uniquement sur un serveur').catch(console.error);
+	//Ignore si le message vient d'autre chose qu'un channel texte (plus besoin avec les Intents)
+	//if (message.channel.type != 'GUILD_TEXT') return message.channel.send('Je n\'accepte pas de message ici, uniquement sur un serveur').catch(console.error);
 
 	/*
 	if (message.author.id === 390178998442786816) {
@@ -48,6 +48,24 @@ module.exports = (client, message) => {
 					if (message.deletable) message.delete().catch(console.error);
 				})
 				.catch(console.error);
+		}
+
+		if (message.content.endsWith('quoi')) {
+			const res = Math.floor(Math.random() * 2);
+			if (res == 0) {
+				message.channel.send('feur \\:)');
+			} else {
+				message.channel.send('coubeh \\:)');
+			}
+		}
+		if (message.content.endsWith('non')) {
+			message.channel.send('bril \\:)');
+		}
+		if (message.content.endsWith('oui')) {
+			message.channel.send('stiti \\:)');
+		}
+		if (message.content.endsWith('toi')) {
+			message.channel.send('ture \\:)');
 		}
 
 		//TODO l'intellisense est baisé, à modifier !
