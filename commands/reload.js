@@ -1,4 +1,4 @@
-const {Client, Message} = require('discord.js');
+const {Client, Message, PermissionFlagsBits} = require('discord.js');
 const {prototype} = require('better-sqlite3');
 
 /**
@@ -10,6 +10,10 @@ const {prototype} = require('better-sqlite3');
  */
 
 exports.run = (client, message, theArgs/*, db*/) => {
+	//Check for Admin permissions
+	if (!message.member.permissions.has(PermissionFlagsBits.Administrator)) {
+		return message.reply('No Admin Perms \:(')
+	}
 
 	if (!theArgs || theArgs.length < 1) return message.reply('Must provide a command name to reload.').catch(console.error);
 	const commandName = theArgs[0];

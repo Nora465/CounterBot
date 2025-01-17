@@ -6,7 +6,7 @@ cette commande pourra être lancé pour définir :
 - Qui peut executer des actions "ADMIN" ???????
 */
 
-const {Client, Message, MessageEmbed} = require('discord.js');
+const {Client, Message, EmbedBuilder} = require('discord.js');
 const {prototype} = require('better-sqlite3');
 
 /**
@@ -86,9 +86,9 @@ this.ModifyOneParameters = (message, [param, value], db) => {
  * @param {prototype} db - Base de donnée
  */
 this.ModifyEveryParameters = async (client, message, db) => {
-	const embed = new MessageEmbed()
+	const embed = new EmbedBuilder()
 	.setTitle('Bienvenue dans la configuration du bot "Comptage"')
-	.setDescription('Veuillez entrer le préfixe voulu pour ce serveur')
+	.setDescription('Veuillez entrer le préfixe voulu pour ce serveur [La cmd est pas finie \:()]')
 	.setColor(0x00AE86)
 	.setThumbnail(client.user.avatarURL({format : 'png'}));
 
@@ -116,6 +116,7 @@ this.ModifyEveryParameters = async (client, message, db) => {
 
 	collector.on('end', collected => {
 		console.log(`Collected ${collected.size} items`);
+		message.channel.send('Timeout... Try again');
 	});
 	/*
 	const filter = m => m.content.includes('discord');

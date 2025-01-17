@@ -1,7 +1,7 @@
 //
 //
 
-const {Client, Message, GuildMember, Permissions} = require('discord.js');
+const {Client, Message, GuildMember, PermissionsBitField} = require('discord.js');
 const {prototype} = require('better-sqlite3');
 
 /** ID du rôle pour le goulag */
@@ -23,8 +23,7 @@ exports.run = async (client, message, theArgs/*, db*/) => {
 	//5 Toogle de la personne goulagué
 
 	//1 Vérification : Le bot a les droits pour mettre/enlever des rôles
-	const thisGuild = client.guilds.cache.get(message.guild.id);
-	if (!thisGuild.me.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) {
+	if (!message.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageRoles)) {
 		return message.channel.send('Je n\'ai pas les permissions nécessaires : "MANAGE_ROLES" \nAnnulation...').catch(console.error);
 	}
 

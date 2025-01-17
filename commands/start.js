@@ -2,8 +2,8 @@
 //https://jsonformatter.org/
 //https://regex101.com/
 /*
-									TODO-LIST
-										- Mettre les commentaires correctes (/** *\) sur toutes les fonctions, pour lisibilité
+			TODO-LIST
+			- Mettre les commentaires correctes (/** *\) sur toutes les fonctions, pour lisibilité
 
 */
 

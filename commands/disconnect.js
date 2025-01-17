@@ -1,4 +1,4 @@
-const {Client, Message, Permissions} = require('discord.js');
+const {Client, Message, PermissionFlagsBits} = require('discord.js');
 const {prototype} = require('better-sqlite3');
 
 /**
@@ -9,7 +9,7 @@ const {prototype} = require('better-sqlite3');
  * @param {prototype}	db		- Base de donnée
  */
 exports.run = (client, message/*, theArgs, db*/) => {
-	if (message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
+	if (message.member.permissions.has(PermissionFlagsBits.Administrator)) {
 		message.channel.send('fermeture des connexions.........').then(() => {
 			client.destroy();
 		}).catch(console.error);

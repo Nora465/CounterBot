@@ -18,7 +18,7 @@ exports.run = (client, message, theArgs/*, db*/) => {
 	if (theArgs.length !== 1) 							return message.channel.send('Cette commande n\'a qu\'__UN SEUL__ argument, sans espace !').catch(console.error);
 	if (theArgs[0].length !== 1) 						return message.channel.send('le prefix doit faire __UN SEUL__ caractère !').catch(console.error);
 	if (theArgs[0] === client.config.prefix) 			return message.channel.send('Le nouveau prefix doit __etre différent__ de l\'ancien !').catch(console.error);
-	if (theArgs[0].search(/[^a-z0-9]/))					return message.channel.send('Le prefix doit être un caractère spéciale').catch(console.error);
+	if (theArgs[0].search(/[^a-z0-9]/))					return message.channel.send('Le prefix doit être un caractère spécial').catch(console.error);
 
 	//Chargement du nouveau préfix
 	client.config.prefix = theArgs[0];

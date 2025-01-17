@@ -53,19 +53,19 @@ module.exports = (client, message) => {
 		if (message.content.endsWith('quoi')) {
 			const res = Math.floor(Math.random() * 2);
 			if (res == 0) {
-				message.channel.send('feur \\:)');
+				return message.channel.send('feur \\:)');
 			} else {
-				message.channel.send('coubeh \\:)');
+				return message.channel.send('coubeh \\:)');
 			}
 		}
 		if (message.content.endsWith('non')) {
-			message.channel.send('bril \\:)');
+			return message.channel.send('bril \\:)');
 		}
 		if (message.content.endsWith('oui')) {
-			message.channel.send('stiti \\:)');
+			return message.channel.send('stiti \\:)');
 		}
 		if (message.content.endsWith('toi')) {
-			message.channel.send('ture \\:)');
+			return message.channel.send('ture \\:)');
 		}
 
 		//TODO l'intellisense est baisé, à modifier !

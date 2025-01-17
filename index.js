@@ -1,21 +1,20 @@
 //pour lancer le bot : "node index.js" dans un terminal
 
-//On vérifie que le version de Node est >= à 12.0.0
+//On vérifie que le version de Node est >= à 22.0.0
 //sinon, erreur
-if (Number(process.versions.node.split('.')[0]) < 12) throw new Error('Node 12.0.0 or higher is required. Update Node on your system.');
+if (Number(process.versions.node.split('.')[0]) < 22) throw new Error('Node 22.0.0 or higher is required. Update Node on your system.');
 
-
-const Discord = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const fs = require('fs');
 
 const Enmap = require('enmap');
 
-const client = new Discord.Client({intents: [
-	Discord.Intents.FLAGS.GUILD_MEMBERS, //autorise la mise à jour du cache des guildMembers
-	Discord.Intents.FLAGS.GUILDS, //autorise la mise à jour du cache de guilds, channels et guild.roles
-	Discord.Intents.FLAGS.MESSAGE_CONTENT,
-	Discord.Intents.FLAGS.GUILD_MESSAGES,
-	Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+const client = new Client({intents: [
+	GatewayIntentBits.GuildMembers, //autorise la mise à jour du cache des guildMembers
+	GatewayIntentBits.Guilds, //autorise la mise à jour du cache de guilds, channels et guild.roles
+	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.GuildMessageReactions
 ]});
 
 //on attache la config et les commandes au BotClient, pour qu'il soit tjs accessible
